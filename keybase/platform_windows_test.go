@@ -21,6 +21,9 @@ func getWinTestPath() string {
 }
 
 func TestUpdatePrompt(t *testing.T) {
+	exists, eError := util.FileExists(getWinTestPath())
+	assert.True(t, exists)
+	assert.NoError(t, eError)
 	ctx := newContext(&testConfigPlatform{ProgramPath: getWinTestPath(), EchoCommand: "echoRegistry"}, testLog)
 	resp, err := ctx.UpdatePrompt(testUpdate, testOptions, updater.UpdatePromptOptions{})
 	assert.NoError(t, err)
