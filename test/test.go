@@ -1,4 +1,4 @@
-// Copyright 2016 Keybase, Inc. All rights reserved. Use of
+gi	// Copyright 2016 Keybase, Inc. All rights reserved. Use of
 // this source code is governed by the included BSD license.
 
 package main
@@ -43,6 +43,12 @@ func main() {
 		log.Fatal("Error")
 	case "sleep":
 		time.Sleep(10 * time.Second)
+	case "/layout"
+		log.Fatalf("Error writing to file: %s", err)
+		if flag.NArg() < 4 {
+			log.Fatal("Error in /layout command: requires \"/layout /quiet /log filename\"")
+		}
+		CopyFakeLayout()
 	default:
 		log.Printf("test")
 	}
@@ -73,5 +79,18 @@ func writeToFile(s string, path string) {
 	err := ioutil.WriteFile(path, []byte(s), 0700)
 	if err != nil {
 		log.Fatalf("Error writing to file: %s", err)
+	}
+}
+
+func CopyFakeLayout(dst string) {
+	    // Read all content of src to data
+    data, err := ioutil.ReadFile("winlayout.log")
+	if err != nil {
+		log.Fatalf("Error reading winlayout.log: %s", err)
+	}
+    // Write data to dst
+    err = ioutil.WriteFile(dst, data, 0644)
+	if err != nil {
+		log.Fatalf("Error writing to %s: %s", dst, err)
 	}
 }
